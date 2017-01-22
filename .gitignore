@@ -10,6 +10,7 @@
 # Compiled Static libraries
 *.a
 *.lib
+bin/
 
 # Executables
 *.exe
@@ -22,3 +23,11 @@ docs/
 
 # Code coverage
 *.lst
+
+# D
+.dub
+docs.json
+__dummy.html
+*.o
+*.obj
+__test__*__

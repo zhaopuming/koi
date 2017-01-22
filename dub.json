@@ -1,0 +1,20 @@
+{
+    "name": "koi",
+    "description": "Koi Editor",
+    "homepage": "https://github.com/zhaopuming/koi",
+    "license": "Boost",
+    "authors": ["Puming Zhao"],
+
+    "stringImportPaths": ["views", "views/res", "views/res/i18n", "views/res/mdpi"],
+
+    "targetPath": "bin",
+    "targetType": "executable",
+
+    "sourceFiles-windows": ["$PACKAGE_DIR/src/win_app.def"],
+
+    "dependencies": {
+        "dlangui": "~>0.9.24"
+    }
+
+}
+
