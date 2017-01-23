@@ -252,7 +252,7 @@ class EditFrame : AppFrame {
         _editor = new DMLSourceEdit();
         hlayout.addChild(_editor);
         _editor.text = "";
-        _editor.fontSize = 16;
+        _editor.fontSize = 14;
 
         bodyWidget.addChild(hlayout);
         return bodyWidget;
