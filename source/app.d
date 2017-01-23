@@ -137,10 +137,9 @@ class EditFrame : AppFrame {
         return true;
     }
 
-    FileDialog createFileDialog(UIString caption, bool fileMustExist = true) {
+    FileDialog createFileDialog(UIString caption, uint flag = 0) {
         uint flags = DialogFlag.Modal | DialogFlag.Resizable;
-        if (fileMustExist)
-            flags |= FileDialogFlag.FileMustExist;
+        if (flag) flags |= flag;
         FileDialog dlg = new FileDialog(caption, window, null, flags);
         dlg.filetypeIcons[".d"] = "text-dml";
         return dlg;
@@ -164,7 +163,7 @@ class EditFrame : AppFrame {
                 case IDEActions.FileNew:
                     UIString caption;
                     caption = "Create new file"d;
-                    FileDialog dlg = createFileDialog(caption, false);
+                    FileDialog dlg = createFileDialog(caption);
                     //dlg.addFilter(FileFilterEntry(UIString("DML files"d), "*.dml"));
                     dlg.addFilter(FileFilterEntry(UIString("All files"d), "*.*"));
                     dlg.dialogResult = delegate(Dialog dlg, const Action result) {
@@ -185,14 +184,19 @@ class EditFrame : AppFrame {
                     } else {
                         UIString caption;
                         caption = "Save File as"d;
-                        FileDialog dlg = createFileDialog(caption, false);
+                        FileDialog dlg = createFileDialog(caption, FileDialogFlag.Save);
                         dlg.addFilter(FileFilterEntry(UIString("All files"d), "*.*"));
                         dlg.dialogResult = delegate(Dialog dlg, const Action result) {
+                            Log.d("Result FileName:", result.stringParam);
+                            Log.d("ACTION_id:", result.id);
+                            string filename = result.stringParam;
+                            saveSourceFile(filename);
+                            /*
                             if (result.id == ACTION_OPEN.id) {
                                 Log.d("Result FileName:", result.stringParam);
                                 string filename = result.stringParam;
                                 saveSourceFile(filename);
-                            }
+                            }*/
                         };
                         dlg.show();
                         return true;
@@ -200,9 +204,12 @@ class EditFrame : AppFrame {
                 case IDEActions.FileOpen:
                     UIString caption;
                     caption = "Open File"d;
-                    FileDialog dlg = createFileDialog(caption);
+                    FileDialog dlg = createFileDialog(caption, FileDialogFlag.FileMustExist);
                     dlg.addFilter(FileFilterEntry(UIString("All files"d), "*.*"));
                     dlg.dialogResult = delegate(Dialog dlg, const Action result) {
+                        Log.d("Result FileName:", result.stringParam);
+                        Log.d("ACTION_id:", result.id);
+                        Log.d("ACTION_OPEN:", ACTION_OPEN.id);
                         if (result.id == ACTION_OPEN.id) {
                             string filename = result.stringParam;
                             openSourceFile(filename);
